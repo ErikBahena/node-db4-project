@@ -5,6 +5,11 @@ exports.up = async function (knex) {
       table.timestamp("created_at").notNullable().defaultTo(knex.fn.now());
       table.string("recipie_name").notNullable().unique();
     })
+    .createTable("ingredients", (table) => {
+      table.increments("ingredient_id");
+      table.integer("quantity").unsigned();
+      table.string("ingredient_name", 40).notNullable().unique();
+    })
     .createTable("steps", (table) => {
       table.increments("step_id");
       table.string("step_instructions", 250).notNullable();
@@ -14,12 +19,8 @@ exports.up = async function (knex) {
         .unsigned()
         .notNullable()
         .references("recipie_id")
-        .inTable("recipies");
-    })
-    .createTable("ingredients", (table) => {
-      table.increments("ingredient_id");
-      table.integer("quantity").unsigned();
-      table.string("ingredient_name", 40).notNullable().unique();
+        .inTable("recipies")
+        .onDelete("RESTRICT");
     })
     .createTable("step_ingredients", (table) => {
       table.increments("step_ingredient_id");
@@ -41,7 +42,7 @@ exports.up = async function (knex) {
 exports.down = async function (knex) {
   await knex.schema
     .dropTableIfExists("step_ingredients")
-    .dropTableIfExists("ingredients")
     .dropTableIfExists("steps")
+    .dropTableIfExists("ingredients")
     .dropTableIfExists("recipies");
 };

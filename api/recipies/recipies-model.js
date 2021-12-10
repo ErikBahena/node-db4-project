@@ -10,15 +10,20 @@ const findById = async (recipie_id) => {
     .select("i.*", "s.step_id", "s.step_instructions", "s.step_number", "r.*")
     .orderBy("s.step_number");
 
-  const ings = stepsArr.map((step) => {
-    if (step.step_id === 2)
-      return {
-        ingredient_id: step.ingredient_id,
-        ingredient_name: step.ingredient_name,
-        quantity: step.quantity,
-      };
-    else return;
-  });
+  const formatIngredients = (step_id) => {
+    return stepsArr
+      .map((step) => {
+        if (step.ingredient_id === null) return;
+
+        if (step.step_id === step_id)
+          return {
+            ingredient_id: step.ingredient_id,
+            ingredient_name: step.ingredient_name,
+            quantity: step.quantity,
+          };
+      })
+      .filter((step) => !!step);
+  };
 
   return {
     recipie_id: stepsArr[0].recipie_id,
@@ -29,7 +34,7 @@ const findById = async (recipie_id) => {
         step_id: step.step_id,
         step_number: step.step_number,
         step_instructions: step.step_instructions,
-        ingredients: ings,
+        ingredients: formatIngredients(step.step_id),
       };
     }),
   };

@@ -8,9 +8,5 @@ exports.seed = function (knex) {
       ingredient_id: 1,
       step_id: 2,
     },
-    {
-      ingredient_id: 2,
-      step_id: 2,
-    },
   ]);
 };
