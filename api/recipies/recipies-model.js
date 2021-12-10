@@ -1,7 +1,7 @@
 const db = require("../../data/db-config");
 
 const findById = async (recipie_id) => {
-  // get all the ingredients related to a recipie
+  // get recipie information, step information, ingredient information related to a recipie
   const stepsArr = await db("recipies as r")
     .leftJoin("steps as s", "r.recipie_id", "s.recipie_id")
     .leftJoin("step_ingredients as si", "s.step_id", "si.step_id")
