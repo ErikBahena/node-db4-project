@@ -8,5 +8,8 @@ exports.seed = function (knex) {
       ingredient_name: "spaghetti noodles",
       quantity: 1,
     },
+    {
+      ingredient_name: "water",
+    },
   ]);
 };

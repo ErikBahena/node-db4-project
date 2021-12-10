@@ -19,7 +19,7 @@ const findById = async (recipie_id) => {
           return {
             ingredient_id: step.ingredient_id,
             ingredient_name: step.ingredient_name,
-            quantity: step.quantity,
+            quantity: step.quantity ? step.quantity : "varied",
           };
       })
       .filter((step) => !!step);
@@ -38,18 +38,6 @@ const findById = async (recipie_id) => {
       };
     }),
   };
-
-  // {
-  //     "created_at": "2021-12-10 02:44:01",
-  //     "ingredient_id": null,
-  //     "ingredient_name": null,
-  //     "quantity": null,
-  //     "recipie_id": 1,
-  //     "recipie_name": "Spaghetti Bolognese",
-  //     "step_id": 1,
-  //     "step_instructions": "Put a large saucepan on a medium heat",
-  //     "step_number": 1
-  // },
 };
 
 module.exports = { findById };
